@@ -1,0 +1,128 @@
+24th sql notes :
+click on your database name and click new query, automatically the window will be connected to the server.
+
+Constraints in sql :
+1. not null - doesnt allow null values. eg: CREATE TABLE TBL_NOTNULL
+{
+SNO INT NOT NULL,
+NAME VARCHAR(50) NOT NULL,
+EMAILID VARCHAR(50) NOT NULL,
+ADDRESS VARCHAR(50) NULL
+}
+
+2.Unique - doesnt allow duplicates, eg: CREATE TABLE TBL_Unique
+{
+SNO INT NOT NULL unique,
+NAME VARCHAR(50) NOT NULL,
+EMAILID VARCHAR(50) NOT NULL unique,
+ADDRESS VARCHAR(50) NULL
+}
+
+3. check - used for checking conditions eg: CREATE TABLE TBL_chk
+{
+SNO INT NOT NULL,
+NAME VARCHAR(50) NOT NULL,
+EMAILID VARCHAR(50) NOT NULL,
+AGE INT check (age>=18)
+}
+
+4. default - eg: CREATE TABLE TBL_default
+{
+SNO INT NOT NULL,
+NAME VARCHAR(50) NOT NULL,
+EMAILID VARCHAR(50) NOT NULL,
+ADDRESS VARCHAR(50) default 'hyd'
+}
+insert into TBL_default(sno,name,emailid) values(2,'sam'
+
+4. identity - used for auto incrememting . eg: CREATE TABLE TBL_NOTNULL
+{
+SNO INT identity(1,1), -->> starts at 1 and keeps incrementing by 1
+NAME VARCHAR(50) NOT NULL,
+EMAILID VARCHAR(50) NOT NULL,
+ADDRESS VARCHAR(50) default 'hyd'
+}
+
+insert into tbl_identity values('3','xyz','anu@yahoo.com','hyd')
+u will get an error --> bcoz when we use identity no need to declare a value .
+
+PRIMARY KEY :
+combination of unique and not null, u cannot insert null values to primary key, we can also link other tables [ to link it , othar table should have foreign key] 
+eg: CREATE TABLE TBL_PK
+{
+SNO INT primary key,
+NAME VARCHAR(50) NOT NULL,
+EMAILID VARCHAR(50) NOT NULL unique,
+ADDRESS VARCHAR(50) default 'hyd'
+}
+EVERY FK SHOULD LINK TO PK, BUT REVERSE ISNT MANDATORY
+
+CREATE TABLE TBL_CSE {      
+ROLLNO INT PRIMARY KEY,
+NAME VARCHAR(50)
+}
+CREATE TABLE TBL_FEEDETAILS
+{
+AMOUNT INT,
+DATEOFPAYMENT DATE,
+ROLLNO INT FOREIGN KEY REFERENCES TBL_CSE(ROLLNO)
+}
+foreign key of feedetails table is linked to pk of cse.
+
+UPDATE COMMAND :
+update tbl_students set fee = 20000, rollno = '08j0' where sno = 1
+
+DROP COMMAND :
+removes data of table along with structure .
+
+DELETE COMMAND:
+DELETE FROM TBL_STUDENT WHERE SNO = 1
+
+TRUNCATE COMMAND :
+u cannot delete particular row of the table, it will delete the entire table. TRUNCATE TABLE TABLE_NAME. it will delete the identity command also.
+
+ALTER COMMAND:
+we can modify the existing structure of the table .[ like field names etc] ALTER TABLE TABLE_NAME ADD FIELD_NAME DATA_TYPE
+
+REMOVE THE FIELD FROM EXISTING TABLE : 
+ALTER TABLE TABLE_NAME DROP COLUMN COLUMN_NAME
+
+CHANGING DATATYPE:
+ALTER TABLE TABLE_NAME ALTER COLUMN COLUMN_NAME NEW_DATA_TYPE
+
+ADDING CONSTRAINT TO EXISTING TABLE:
+ALTER TABLE TBL_PK ADD UNIQUE(NAME)
+ALTER TABLE TBL_PK ADD PRIMARY KEY(SNO)
+ALTER TABLE TABLE_NAME DROP CONSTRAINT [ ----- check in google ---]
+
+COMMANDS :
+1.DDL
+2.DML
+3.DQL
+create  new databse with name northwind, right click on database , go to task --> restore --> database --> from device --> go to 3 dots --> add --> automatically it goes to that path --> select database --> click ok  2 times--> goto options --> overide and preserved
+
+NORTH WIND DATABASE:
+in north wind go to orders table and select * from orders, u can see data from orders.  
+U CAN CHANGE HEADING OF A PARTICULAR FIELD: select OrderID as 'OID' from orders
+inorder to avoid duplicates : select distinct(customerid) from orders
+select * from orders order by customerid asc [ sorts in ascending order] [ a-z] also u can use desc
+
+select * from orders order by orderdate asc
+select * from orders where ShipRegion is null [ is keyword used to display null values]
+select * from orders where customerid = 'alfki'
+select * from orders where orderdate between '01/1/1997' and '12/2/1998' [similarly can use not between]
+select * from orders where freight>=10 [freight is column name in northwind]
+max,min,sum,count comes under aggregate functions
+%a - ending with a 
+h%r - starts with h and ends with r
+
+IN OPERATOR :
+ select * from orders where customerid in ('hanar' , 'alfki') order by customerid [using equal to operator we cannot use mutiple things , eg only hanar can be used ] [ so use in operator] 
+select * from orders where customerid = 'tomsp' and employeeid=2 [and operator --> both conds should satisfy][or --> any one cond matches , u get result]
+
+HOW TO MERGE OUTPUT OF 2 OR MORE TABLES :
+1.number of fields and order in which these fields are written should be same
+merges as one result set --> merges result of 2 or more tables --> UNION ALL -->includes duplicates
+UNION --> same as union all but eliminates duplicates
+INTERSECT --> common in 2 tables are displayed 
+EXCEPT : displays unique in left table eg : select * from books1 except select *from books2
