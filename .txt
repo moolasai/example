@@ -1,5 +1,4 @@
-
-
+TECRA NOTES
 
 click on your database name and click new query, automatically the window will be connected to the server.
 
